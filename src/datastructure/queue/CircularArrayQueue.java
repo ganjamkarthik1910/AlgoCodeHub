@@ -16,7 +16,6 @@ public class CircularArrayQueue<T> extends DSAbstract.Queue<T> {
 	private int tail;
 	private int capacity;
 
-	@SuppressWarnings("unchecked")
 	public CircularArrayQueue() {
 		capacity = DEFAULT_CAPACITY;
 		data = new Object[capacity];

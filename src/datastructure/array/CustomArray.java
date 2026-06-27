@@ -26,7 +26,7 @@ public class CustomArray<T> {
 
 	public T get(int index) {
 		validate(index);
-		return (T) data[index];
+		return elementAt(index);
 	}
 
 	public void set(int index, T value) {
@@ -39,7 +39,7 @@ public class CustomArray<T> {
 			throw new IndexOutOfBoundsException("Array is empty");
 		}
 
-		T value = (T) data[--size];
+		T value = elementAt(--size);
 		data[size] = null;
 		return value;
 	}
@@ -80,5 +80,10 @@ public class CustomArray<T> {
 		if (index < 0 || index >= size) {
 			throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
 		}
+	}
+
+	@SuppressWarnings("unchecked")
+	private T elementAt(int index) {
+		return (T) data[index];
 	}
 }

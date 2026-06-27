@@ -14,9 +14,8 @@ public class ChainedHashMap<K, V> extends DSAbstract.Map<K, V> {
 
 	private Entry<K, V>[] buckets;
 
-	@SuppressWarnings("unchecked")
 	public ChainedHashMap() {
-		buckets = new Entry[DEFAULT_CAPACITY];
+		buckets = newBucketArray(DEFAULT_CAPACITY);
 	}
 
 	@Override
@@ -136,13 +135,18 @@ public class ChainedHashMap<K, V> extends DSAbstract.Map<K, V> {
 		return Math.floorMod(Objects.hashCode(key), buckets.length);
 	}
 
+	@SuppressWarnings("unchecked")
+	private Entry<K, V>[] newBucketArray(int capacity) {
+		return new Entry[capacity];
+	}
+
 	private void resizeIfNeeded() {
 		if (size <= buckets.length * LOAD_FACTOR) {
 			return;
 		}
 
 		Entry<K, V>[] oldBuckets = buckets;
-		buckets = new Entry[oldBuckets.length * 2];
+		buckets = newBucketArray(oldBuckets.length * 2);
 		size = 0;
 
 		for (Entry<K, V> bucket : oldBuckets) {
