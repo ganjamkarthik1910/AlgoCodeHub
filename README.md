@@ -14,7 +14,7 @@ foundation.*  ──►  datastructure.*  +  algorithm.*  ──►  program/
      DS · Algo factories              pure implementations        playgrounds
 ```
 
-[Quick Start](#quick-start) · [Structure](#structure) · [What's Inside](#whats-inside) · [Complexity](COMPLEXITY.md) · [Changelog](CHANGELOG.md) · [Interview Value](#interview-value) · [What's Next](#whats-next)
+[Quick Start](#quick-start) · [Structure](#structure) · [Whats Inside](#whats-inside) · [Complexity](COMPLEXITY.md) · [Changelog](CHANGELOG.md) · [Interview Value](#interview-value) · [Whats Next](#whats-next)
 
 </div>
 
@@ -90,7 +90,7 @@ Zero `java.util` collections · composition over reinvention · O(1) where it ma
 
 ---
 
-<h2 id="whats-inside">What's Inside</h2>
+## Whats Inside
 
 <details>
 <summary><b>Data structures</b> — <code>DS.*</code> factory</summary>
@@ -158,7 +158,7 @@ Not a FAANG shortcut — a **force multiplier**. Pair with 150–300 timed LeetC
 
 ---
 
-<h2 id="whats-next">What's Next</h2>
+## Whats Next
 
 Topic-wise problem packages under `program/` — each solution built on `DS.*` and `algorithm.*`:
 
