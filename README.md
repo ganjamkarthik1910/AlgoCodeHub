@@ -14,7 +14,7 @@ foundation.*  ──►  datastructure.*  +  algorithm.*  ──►  program/
      DS · Algo factories              pure implementations        playgrounds
 ```
 
-[Quick Start](#-quick-start) · [Structure](#-structure) · [What's Inside](#-whats-inside) · [Complexity](COMPLEXITY.md) · [Changelog](CHANGELOG.md) · [Interview Value](#-interview-value) · [What's Next](#-whats-next)
+[Quick Start](#quick-start) · [Structure](#structure) · [What's Inside](#whats-inside) · [Complexity](COMPLEXITY.md) · [Changelog](CHANGELOG.md) · [Interview Value](#interview-value) · [What's Next](#whats-next)
 
 </div>
 
