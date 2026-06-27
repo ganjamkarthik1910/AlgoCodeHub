@@ -90,7 +90,7 @@ Zero `java.util` collections · composition over reinvention · O(1) where it ma
 
 ---
 
-## What's Inside
+<h2 id="whats-inside">What's Inside</h2>
 
 <details>
 <summary><b>Data structures</b> — <code>DS.*</code> factory</summary>
@@ -158,7 +158,7 @@ Not a FAANG shortcut — a **force multiplier**. Pair with 150–300 timed LeetC
 
 ---
 
-## What's Next
+<h2 id="whats-next">What's Next</h2>
 
 Topic-wise problem packages under `program/` — each solution built on `DS.*` and `algorithm.*`:
 
