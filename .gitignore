@@ -1,11 +1,11 @@
-# Gradle (build lives under .github/build/)
+# Gradle output (keep .github/build/ source — do NOT use bare build/; it ignores that folder)
 .github/build/.gradle/
 .github/build/build/
+/build/
 
 # Compiled
 *.class
 bin/
-build/
 out/
 target/
 
