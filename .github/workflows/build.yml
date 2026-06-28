@@ -59,7 +59,7 @@ jobs:
 
     steps:
       - name: Download JAR artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: algocodehub-jars
           path: jars
@@ -94,7 +94,7 @@ jobs:
 
     steps:
       - name: Download JAR artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: algocodehub-jars
           path: jars
