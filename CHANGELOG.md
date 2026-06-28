@@ -12,6 +12,8 @@ First stable release.
 
 ### Added
 
+- **Gradle build** — `build.gradle.kts` for library JAR + runnable fat JAR
+- **JPMS exports** — `module-info.java` for modular library use
 - **Foundation layer** — `foundation.ds` and `foundation.algo` (interfaces, abstractions, factories)
 - **25+ data structures** under `datastructure/` — array, lists, stack, queue, deque, tree, heap, map, set, graph, advanced
 - **10 algorithm categories** under `algorithm/` — search, sort, technique, dp, greedy, backtracking, graphalgo, treealgo, bit, math
@@ -34,6 +36,11 @@ First stable release.
 ---
 
 ## [Unreleased]
+
+### Added
+
+- **GitHub Actions** — automatic JAR build on push; attach to Release on `v*` tags
+- **Gradle wrapper** — `gradlew` / `gradlew.bat` committed for CI and local builds
 
 ### Fixed
 
