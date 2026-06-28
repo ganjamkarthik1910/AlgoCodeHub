@@ -100,7 +100,7 @@ jobs:
           path: jars
 
       - name: Attach JARs to versioned Release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           files: jars/algocodehub-*.jar
           generate_release_notes: true
