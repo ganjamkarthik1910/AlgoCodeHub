@@ -5,7 +5,7 @@
 **Every data structure & algorithm pattern — built from scratch in Java.**
 
 [![Java 23](https://img.shields.io/badge/Java-23-orange?style=flat-square&logo=openjdk)](https://openjdk.org/)
-[![Build JAR](https://github.com/OWNER/AlgoCodeHub/actions/workflows/build.yml/badge.svg)](https://github.com/OWNER/AlgoCodeHub/actions/workflows/build.yml)
+[![License MIT](https://img.shields.io/badge/License-MIT-blue?style=flat-square)](LICENSE)
 [![DS 25+](https://img.shields.io/badge/DS-25%2B-blue?style=flat-square)](src/datastructure/)
 [![Algo 10](https://img.shields.io/badge/Algo-10-green?style=flat-square)](src/algorithm/)
 [![java.util](https://img.shields.io/badge/java.util-0-red?style=flat-square)](src/datastructure/)
@@ -15,23 +15,67 @@ foundation.*  ──►  datastructure.*  +  algorithm.*  ──►  program/
      DS · Algo factories              pure implementations        playgrounds
 ```
 
-[Quick Start](#quick-start) · [Structure](#structure) · [Library & JAR](#library-and-jar) · [Whats Inside](#whats-inside) · [Complexity](COMPLEXITY.md) · [Changelog](CHANGELOG.md) · [Interview Value](#interview-value) · [Whats Next](#whats-next)
+[About](#about) · [Requirements](#requirements) · [Get Started](#get-started) · [Structure](#structure) · [Library & JAR](#library-and-jar) · [Whats Inside](#whats-inside) · [Complexity](COMPLEXITY.md) · [Interview Value](#interview-value) · [Roadmap](#roadmap) · [Contributing](#contributing) · [License](#license)
 
 </div>
 
 ---
 
-## Why this exists
+## About
 
 Most people learn DSA by **calling** `java.util` and never seeing what's underneath.
 
-**AlgoCodeHub flips that** — 25+ hand-written structures and 10 algorithm categories, wired through compact hub files so you can **instantiate, debug, extend, and explain** without rewriting boilerplate.
+**AlgoCodeHub** is an educational Java library: **25+ hand-written data structures** and **10 algorithm categories**, wired through compact hub files so you can **instantiate, debug, extend, and explain** without rewriting boilerplate.
+
+| | |
+|---|---|
+| **Purpose** | Learn and interview prep — readable source, not a production JDK replacement |
+| **Language** | Java 23 (Eclipse or any JDK 23 toolchain) |
+| **Dependencies** | None — zero `java.util` collections in implementations |
+| **Distribution** | Source in `src/` · pre-built JARs on [Releases](https://github.com/ganjamkarthik1910/AlgoCodeHub/releases) |
+| **License** | [MIT](LICENSE) |
 
 > *Don't just solve problems. Own the machinery.*
 
 ---
 
-## Quick Start
+## Requirements
+
+- **JDK 23** — [Eclipse Temurin](https://adoptium.net/) or [OpenJDK 23](https://openjdk.org/)
+- **IDE (optional)** — Eclipse, IntelliJ, or VS Code with Java support
+- **Git** — to clone; JAR-only users can skip this and use [Releases](https://github.com/ganjamkarthik1910/AlgoCodeHub/releases)
+
+---
+
+## Get Started
+
+### 1. Clone and explore
+
+```bash
+git clone https://github.com/ganjamkarthik1910/AlgoCodeHub.git
+cd AlgoCodeHub
+```
+
+The repository root is intentionally minimal:
+
+| Path | Contents |
+|------|----------|
+| `src/` | All source — data structures, algorithms, playgrounds |
+| `README.md` | This file |
+| `COMPLEXITY.md` | Time/space cheat sheet for every implementation |
+| `LICENSE` | MIT license |
+
+Build and CI live under `.github/` (maintainer-only; not required to learn from source).
+
+### 2. Run in Eclipse
+
+1. **File → Import → Existing Projects into Workspace**
+2. Select the cloned `AlgoCodeHub` folder (JDK **23** required)
+3. Run **`program.DSPlayground`** or **`program.AlgoPlayground`**
+
+**AlgoPlayground CLI args:** `all` · `search` · `sort` · `technique` · `dp` · `greedy` · `graph` · `tree` · `bit`
+
+### 3. Use in your own project (code)
 
 ```java
 import foundation.ds.DS;
@@ -39,28 +83,33 @@ import foundation.algo.Algo;
 import algorithm.technique.TwoPointer;
 import algorithm.graphalgo.GraphAlgorithms;
 
-// Data structures
 var stack = DS.stack(1, 2, 3);
 var tree  = DS.<Integer>avlTree();
 var cache = DS.<String, Integer>lruCache(100);
 
-// Algorithms
 Algo.mergeSort().sort(new int[]{5, 2, 8, 1});
 TwoPointer.twoSumSorted(new int[]{1, 2, 4, 6}, 8);
 
-// Graph — use GraphAlgorithms.INF for no edge
 int INF = GraphAlgorithms.INF;
 GraphAlgorithms.dijkstra(new int[][]{{0, 4, INF}, {4, 0, 2}, {INF, 2, 0}}, 0);
 ```
 
-**Run in Eclipse (Java 23):** `DSPlayground` · `AlgoPlayground`  
-AlgoPlayground CLI: `all` · `search` · `sort` · `technique` · `dp` · `greedy` · `graph` · `tree` · `bit`
-
-| Use case | Import |
-|----------|--------|
-| Create anything | `foundation.ds.DS` · `foundation.algo.Algo` |
-| Solve problems | `datastructure.*` · `algorithm.*` directly |
+| Goal | Where to start |
+|------|----------------|
+| Create anything quickly | `foundation.ds.DS` · `foundation.algo.Algo` |
+| Read implementations | `datastructure.*` · `algorithm.*` |
 | Learn by debugging | Breakpoints in `program/DSPlayground` or `AlgoPlayground` |
+
+### 4. Download pre-built JARs
+
+No build step required — grab artifacts from **[Releases](https://github.com/ganjamkarthik1910/AlgoCodeHub/releases)**:
+
+| JAR | Use |
+|-----|-----|
+| `algocodehub-1.0.0-lib.jar` | Add to classpath — library / modular use |
+| `algocodehub-1.0.0-demo.jar` | Runnable demos — `java -jar algocodehub-1.0.0-demo.jar` |
+
+The library JAR exposes automatic module name **`com.algocodehub.dsa`** (see `src/module-info.java`).
 
 ---
 
@@ -87,15 +136,17 @@ src/
 └── program/             DSPlayground · AlgoPlayground
 ```
 
-Zero `java.util` collections · composition over reinvention · O(1) where it matters (LRU, tail pointers, Union-Find, rehashing)
+**Design principles:** composition over reinvention · O(1) where it matters (LRU, tail pointers, Union-Find, rehashing) · every structure explainable on a whiteboard · no hidden JDK collections.
+
+Full complexity tables → **[COMPLEXITY.md](COMPLEXITY.md)**
 
 ---
 
 ## Library and JAR
 
-### The pitch — why this exists alongside `java.util`
+### Why this exists alongside `java.util`
 
-The JDK ships **production engines** — `HashMap`, `PriorityQueue`, `TreeMap`. Oracle will never add AVL trees, Fenwick trees, LRU wiring, monotonic-stack templates, or a knapsack cookbook to `java.util`. That's not their job.
+The JDK ships **production engines** — `HashMap`, `PriorityQueue`, `TreeMap`. Oracle will never add AVL trees, Fenwick trees, LRU wiring, monotonic-stack templates, or a knapsack cookbook to `java.util`.
 
 **AlgoCodeHub is the layer the platform leaves open:**
 
@@ -108,134 +159,24 @@ The JDK ships **production engines** — `HashMap`, `PriorityQueue`, `TreeMap`. 
 | "Use it" | **Own it** — step into rehash, rotation, path compression |
 
 > **Not a replacement for `java.util` in production.**  
-> An **educational extension** for learners who won't rewrite a heap today but refuse a black box — plus niches the standard library will never ship.
+> An **educational extension** for learners who refuse a black box — plus niches the standard library will never ship.
 
 **Who uses the JAR?**
 
 - DSA students practicing patterns without rebuilding 25 structures first  
 - Interview prep with **depth** (LRU, Union-Find, hash chaining you can explain)  
 - Bootcamps enforcing **no `java.util` collections**  
-- You — solving problems under `program/` with `DS.*` and `algorithm.*`
+- Anyone solving problems with `DS.*` and `algorithm.*` on the classpath
 
 ```java
-// Add algocodehub-1.0.0.jar to your classpath, then:
 import foundation.ds.DS;
 import algorithm.dp.Knapsack;
 import algorithm.technique.MonotonicStack;
 
-var cache = DS.<String, Integer>lruCache(100);   // O(1) — source included
+var cache = DS.<String, Integer>lruCache(100);
 Knapsack.coinChange(new int[]{1, 2, 5}, 11);
 MonotonicStack.nextGreaterElement(new int[]{2, 1, 2, 4, 3});
 ```
-
----
-
-### Build the JAR (Gradle)
-
-**Requires:** [JDK 23](https://openjdk.org/) — wrapper is included (`./gradlew` / `gradlew.bat`)
-
-| Command | Output | Use |
-|---------|--------|-----|
-| `./gradlew jar` | `build/libs/algocodehub-1.0.0.jar` | **Library** — add to your project's classpath |
-| `./gradlew fatJar` | `build/libs/algocodehub-1.0.0-all.jar` | **Runnable** — AlgoPlayground menu |
-| `./gradlew fatJar -Pmain=program.DSPlayground` | same name, different entry | DS structure demos |
-| `./gradlew runAlgo` | — | Run AlgoPlayground from source |
-| `./gradlew runAlgo -Pargs="dp"` | — | Run one section |
-| `./gradlew runDS` | — | Run DSPlayground |
-
-**Run the fat JAR** (no Eclipse needed):
-
-```bash
-java -jar build/libs/algocodehub-1.0.0-all.jar
-java -jar build/libs/algocodehub-1.0.0-all.jar search
-java -jar build/libs/algocodehub-1.0.0-all.jar all
-```
-
-**Use as a library in another Java project:**
-
-```bash
-# Copy JAR into your project
-cp build/libs/algocodehub-1.0.0.jar /path/to/YourProject/libs/
-```
-
-Eclipse → your project → **Build Path → Add External JARs** → select `algocodehub-1.0.0.jar`
-
-Or Gradle consumer:
-
-```kotlin
-dependencies {
-    implementation(files("libs/algocodehub-1.0.0.jar"))
-}
-```
-
----
-
-### Download the JARs
-
-**Easiest — GitHub Releases (recommended)**
-
-After a push to `main`, open:
-
-**Releases → [Latest JAR Build](https://github.com/OWNER/AlgoCodeHub/releases/tag/latest-jars)**
-
-Under **Assets**, click to download:
-
-| File | Use |
-|------|-----|
-| `algocodehub-1.0.0.jar` | Library — add to Eclipse classpath |
-| `algocodehub-1.0.0-all.jar` | Runnable — `java -jar algocodehub-1.0.0-all.jar` |
-
-> Replace `OWNER` with your GitHub username in links above.
-
-**Versioned release** — push tag `v1.0.0` → JARs attach to that release instead.
-
-**Alternative — Actions Artifacts**
-
-Only works for pushes to `main` (not pull requests).  
-Actions → green run → bottom **Artifacts** → click **`algocodehub-jars`**.
-
-If the name is not clickable, you likely ran from a **PR** — use **Releases** instead.
-
-### GitHub Actions (automatic build)
-
-Every push to `main` triggers [`.github/workflows/build.yml`](.github/workflows/build.yml):
-
-1. JDK 23 + Gradle on Ubuntu  
-2. `./gradlew clean jar fatJar`  
-3. JARs published to **Releases → Latest JAR Build**  
-4. Also saved under **Actions → Artifacts** (main branch only)
-
-**Tag a versioned release:**
-
-```bash
-git tag -a v1.0.0 -m "AlgoCodeHub v1.0.0"
-git push origin v1.0.0
-```
-
-→ Creates release `v1.0.0` with both JARs attached.
-
----
-
-### Release on GitHub (manual)
-
-1. **Commit & push** all changes to `main`
-2. **Build artifacts:**
-   ```bash
-   ./gradlew clean jar fatJar
-   ```
-3. **Tag the release:**
-   ```bash
-   git tag -a v1.0.0 -m "AlgoCodeHub v1.0.0"
-   git push origin v1.0.0
-   ```
-4. GitHub → **Releases → Draft a new release**
-   - Tag: `v1.0.0`
-   - Title: `AlgoCodeHub v1.0.0`
-   - Attach: `algocodehub-1.0.0.jar` + `algocodehub-1.0.0-all.jar`
-   - Paste highlights from [CHANGELOG.md](CHANGELOG.md)
-5. **Download on any machine** → add library JAR to classpath or run fat JAR with JDK 23
-
-**No Gradle?** Eclipse → right-click project → **Export → Runnable JAR file** → choose `AlgoPlayground` or `DSPlayground` as main class.
 
 ---
 
@@ -277,8 +218,6 @@ git push origin v1.0.0
 
 ## Interview Value
 
-### What this library gives you
-
 If you've read the source, you walk into interviews with real depth — not memorized slides.
 
 | You can… | Because… |
@@ -303,15 +242,29 @@ If you've read the source, you walk into interviews with real depth — not memo
 
 **Verdict:** ⭐⭐⭐⭐⭐ for **understanding & follow-up questions** · ⭐⭐⭐ for **timed interview coding** on its own.
 
-Not a FAANG shortcut — a **force multiplier**. Pair with 150–300 timed LeetCode/NeetCode problems. Use this repo to learn *why*; use LC stubs when the clock is running.
+Pair with 150–300 timed LeetCode/NeetCode problems. Use this repo to learn *why*; use LC stubs when the clock is running.
 
 ---
 
-## Whats Next
+## Roadmap
 
 Topic-wise problem packages under `program/` — each solution built on `DS.*` and `algorithm.*`:
 
 `program/dp` · `program/graph` · `program/bt` · `program/hash` · `program/string` · `program/matrix` · `program/bit`
+
+---
+
+## Contributing
+
+Issues and pull requests are welcome. Changes under `.github/` require maintainer review.
+
+Report security issues privately via [Security Advisories](https://github.com/ganjamkarthik1910/AlgoCodeHub/security/advisories/new) — see [`.github/SECURITY.md`](.github/SECURITY.md).
+
+---
+
+## License
+
+[MIT License](LICENSE) — Copyright (c) 2026 AlgoCodeHub. Free to use, modify, and distribute with attribution.
 
 ---
 
@@ -325,5 +278,13 @@ Topic-wise problem packages under `program/` — each solution built on `DS.*` a
 import foundation.ds.DS;
 DS.avlTree().insert("you");
 ```
+
+<br/>
+
+**Skip the setup. Grab the goods.**
+
+📦 **[Releases](https://github.com/ganjamkarthik1910/AlgoCodeHub/releases)** — **`-lib`** for classpath · **`-demo`** to run playgrounds
+
+*Clone to learn · Download to build.*
 
 </div>

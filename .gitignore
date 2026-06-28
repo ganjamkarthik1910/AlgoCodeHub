@@ -1,5 +1,6 @@
-# Gradle
-.gradle/
+# Gradle (build lives under .github/build/)
+.github/build/.gradle/
+.github/build/build/
 
 # Compiled
 *.class
@@ -8,8 +9,10 @@ build/
 out/
 target/
 
-# Eclipse (keep .project / .classpath for easy import — ignore local output)
-.settings/org.eclipse.jdt.apt.core.prefs
+# Eclipse — import locally; not committed (clean public root)
+.project
+.classpath
+.settings/
 
 # IntelliJ / VS Code
 .idea/

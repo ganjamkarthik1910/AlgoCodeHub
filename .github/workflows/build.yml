@@ -8,12 +8,19 @@ on:
     branches: [main, master]
   workflow_dispatch:
 
+# Default: read-only. Release jobs elevate permissions only when needed.
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: write
+    defaults:
+      run:
+        working-directory: .github/build
 
     steps:
       - name: Checkout
@@ -28,7 +35,7 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
 
-      - name: Build library and fat JARs
+      - name: Build library and demo JARs
         run: ./gradlew clean jar fatJar --no-daemon
 
       - name: List built JARs
@@ -39,12 +46,25 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: algocodehub-jars
-          path: build/libs/
+          path: .github/build/build/libs/
           if-no-files-found: error
           retention-days: 30
 
-      - name: Publish JARs to Releases (easy download)
-        if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
+  publish-latest:
+    needs: build
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Download JAR artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: algocodehub-jars
+          path: jars
+
+      - name: Publish to Releases (Latest JAR Build)
         uses: ncipollo/release-action@v1
         with:
           tag: latest-jars
@@ -54,20 +74,33 @@ jobs:
 
             | File | Use |
             |------|-----|
-            | `algocodehub-1.0.0.jar` | Library — add to classpath |
-            | `algocodehub-1.0.0-all.jar` | Runnable — `java -jar ...all.jar` |
+            | `algocodehub-1.0.0-lib.jar` | Library — add to classpath |
+            | `algocodehub-1.0.0-demo.jar` | Runnable — `java -jar ...demo.jar` |
 
-            For a versioned release, push tag `v1.0.0` instead.
-          artifacts: build/libs/algocodehub-*.jar
+            For a versioned release, push tag `v1.0.0`.
+          artifacts: jars/algocodehub-*.jar
           allowUpdates: true
           removeArtifacts: true
           makeLatest: false
           prerelease: true
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Attach JARs to version tag Release
-        if: startsWith(github.ref, 'refs/tags/v')
+  publish-version:
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Download JAR artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: algocodehub-jars
+          path: jars
+
+      - name: Attach JARs to versioned Release
         uses: softprops/action-gh-release@v2
         with:
-          files: build/libs/algocodehub-*.jar
+          files: jars/algocodehub-*.jar
           generate_release_notes: true
