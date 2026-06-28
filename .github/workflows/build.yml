@@ -6,6 +6,7 @@ on:
     tags: ['v*']
   pull_request:
     branches: [main, master]
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -30,14 +31,41 @@ jobs:
       - name: Build library and fat JARs
         run: ./gradlew clean jar fatJar --no-daemon
 
+      - name: List built JARs
+        run: ls -lah build/libs/
+
       - name: Upload JAR artifacts
+        if: github.event_name != 'pull_request'
         uses: actions/upload-artifact@v4
         with:
           name: algocodehub-jars
-          path: build/libs/algocodehub-*.jar
+          path: build/libs/
+          if-no-files-found: error
           retention-days: 30
 
-      - name: Attach JARs to GitHub Release
+      - name: Publish JARs to Releases (easy download)
+        if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
+        uses: ncipollo/release-action@v1
+        with:
+          tag: latest-jars
+          name: Latest JAR Build
+          body: |
+            Auto-built JARs from commit ${{ github.sha }}.
+
+            | File | Use |
+            |------|-----|
+            | `algocodehub-1.0.0.jar` | Library — add to classpath |
+            | `algocodehub-1.0.0-all.jar` | Runnable — `java -jar ...all.jar` |
+
+            For a versioned release, push tag `v1.0.0` instead.
+          artifacts: build/libs/algocodehub-*.jar
+          allowUpdates: true
+          removeArtifacts: true
+          makeLatest: false
+          prerelease: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Attach JARs to version tag Release
         if: startsWith(github.ref, 'refs/tags/v')
         uses: softprops/action-gh-release@v2
         with:

@@ -170,24 +170,49 @@ dependencies {
 
 ---
 
-### GitHub Actions (automatic JAR build)
+### Download the JARs
+
+**Easiest — GitHub Releases (recommended)**
+
+After a push to `main`, open:
+
+**Releases → [Latest JAR Build](https://github.com/OWNER/AlgoCodeHub/releases/tag/latest-jars)**
+
+Under **Assets**, click to download:
+
+| File | Use |
+|------|-----|
+| `algocodehub-1.0.0.jar` | Library — add to Eclipse classpath |
+| `algocodehub-1.0.0-all.jar` | Runnable — `java -jar algocodehub-1.0.0-all.jar` |
+
+> Replace `OWNER` with your GitHub username in links above.
+
+**Versioned release** — push tag `v1.0.0` → JARs attach to that release instead.
+
+**Alternative — Actions Artifacts**
+
+Only works for pushes to `main` (not pull requests).  
+Actions → green run → bottom **Artifacts** → click **`algocodehub-jars`**.
+
+If the name is not clickable, you likely ran from a **PR** — use **Releases** instead.
+
+### GitHub Actions (automatic build)
 
 Every push to `main` triggers [`.github/workflows/build.yml`](.github/workflows/build.yml):
 
 1. JDK 23 + Gradle on Ubuntu  
 2. `./gradlew clean jar fatJar`  
-3. JARs uploaded as **Actions → Artifacts** (`algocodehub-jars`)
+3. JARs published to **Releases → Latest JAR Build**  
+4. Also saved under **Actions → Artifacts** (main branch only)
 
-**Tag a release** — JARs attach automatically:
+**Tag a versioned release:**
 
 ```bash
 git tag -a v1.0.0 -m "AlgoCodeHub v1.0.0"
 git push origin v1.0.0
 ```
 
-→ Creates a GitHub Release with `algocodehub-1.0.0.jar` + `algocodehub-1.0.0-all.jar` attached.
-
-> Replace `OWNER` in the README build badge with your GitHub username after publishing.
+→ Creates release `v1.0.0` with both JARs attached.
 
 ---
 
